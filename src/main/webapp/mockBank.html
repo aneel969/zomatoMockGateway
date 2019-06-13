@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">
+</script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">
+</script>
+	
+</head>
+<body>
+	
+	<div class="container" id="transactionControlPage">
+	</div>
+</body>
+
+
+<script>
+
+
+	$(document).ready(function(){
+				
+		function ajaxFunc(url, data) {
+		     var returnData;
+		     $.ajax({
+		     	url: url,
+		     	data: data,
+		     	async: false,
+		       	type: "POST",
+		       	dataType: "json",
+		       	success: function(response) {
+		        	 returnData = response;
+		       	}
+		     });
+		     return returnData;
+		}
+		var urlParams = new URLSearchParams(window.location.search);
+		var transactionId=urlParams.get('transactionId');
+		
+		var transactionStatus="";
+		
+		var url='/mockgateway/gateway/transactionStatus.service';
+        var data = [];
+        data={
+        	"transactionId":transactionId		
+        }
+        var response=ajaxFunc(url,data);
+        transactionStatus=response['status'];
+		if(transactionStatus=='processing'){
+			
+			var divValue = '<h3>Mock Bank</h3>'+
+			'		'+
+			'		<div class="row" >'+
+			'			<div class="col-sm-3">'+
+			'				<button type="button" class="btn btn-success" id="success">Success</button>	'+
+			'			</div>'+
+			'			'+
+			'			<div class="col-sm-3">'+
+			'				<button type="button" class="btn btn-danger" id="failed">Fail</button>		'+
+			'			</div>'+
+			'		</div>';
+				
+			$('#transactionControlPage').html(divValue);
+			
+			
+			var url='/mockgateway/gateway/updateTransaction.service';
+	        var data = [];
+	        data={
+	        	"transactionId":transactionId,
+	        	"status":"terminated"
+	        }
+	        ajaxFunc(url,data);
+	        transactionStatus="";		
+			$('.btn').click(function(){
+				
+				var status=$(this).attr('id');
+
+				var url='/mockgateway/gateway/updateTransaction.service';
+		        var data = [];
+		        data={
+		        	"transactionId":transactionId,
+		        	"status":status
+		        }
+		        var response=ajaxFunc(url,data);
+		        var url=response['redirectUrl']+'?status='+response['status'];
+				$(location).attr('href',url);
+				
+			});
+		}else{
+			
+			$('#transactionControlPage').html("<b>transaction page has expired</b>");
+
+		}
+	});
+
+</script>
+
+</html>
