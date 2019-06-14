@@ -1,5 +1,6 @@
 package com.zomato.gateway.controller;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +23,11 @@ import com.zomato.gateway.paymentrequest.PaymentRequest;
 import com.zomato.gateway.service.MerchantService;
 import com.zomato.gateway.service.TransactionService;
 import com.zomato.gateway.validators.PaymentRequestValidator;
-
+//write trigger
 @RestController
 @RequestMapping("/gateway")
 public class PaymentController {
-	
-	
+
 	@Autowired
 	private TransactionService transactionService;
 	
@@ -65,7 +65,11 @@ public class PaymentController {
 				response.put("errorCode","0");
 				response.put("transactionId",transactionId);
 				response.put("status",transaction.getStatus());
-				//todo should be configurable
+		        InetAddress ip;
+		        String hostname;
+				ip = InetAddress.getLocalHost();
+	            hostname = ip.getHostName();
+	            System.out.println(hostname);
 				response.put("bankUrl","http://localhost:8080/mockgateway/mockBank.html?transactionId="+transactionId);
 	            responseEntity = new ResponseEntity(response, HttpStatus.ACCEPTED);
 				

@@ -17,8 +17,8 @@
 	<!-- Add support for component scanning -->
 	<context:component-scan
 		base-package="com.zomato.gateway" />
-	<context:component-scan
-		base-package="com.zomatotest.controller" />
+	<!-- <context:component-scan
+		base-package="com.zomatotest.controller" /> -->
 	<!-- Add support for conversion, formatting and validation support -->
 	<mvc:annotation-driven />
 

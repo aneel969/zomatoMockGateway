@@ -59,7 +59,7 @@ public class PaymentRequestValidator {
 		return response;
 	}
 	
-	private HashMap<String, String> validateRedirectUrl(String redirectUrl) {
+	public HashMap<String, String> validateRedirectUrl(String redirectUrl) {
 		HashMap<String, String> response= new HashMap<String, String>();
 		response.put("errorCode","0");
 
@@ -71,7 +71,7 @@ public class PaymentRequestValidator {
 		return response;
 	}
 
-	private boolean validateMerchant(int merchantId) {
+	public boolean validateMerchant(int merchantId) {
 	
 		boolean merchantExists=merchantService.isValidMerchant(merchantId);
 		return merchantExists;
@@ -147,6 +147,14 @@ public class PaymentRequestValidator {
 		response.put("errorCode","1");
 		response.put("errorMessage","invalid status");
 		return response;
+	}
+	
+	public String name() {
+		
+		return "name";
+	}
+	public boolean dummyfunction() {
+		return true;
 	}
 
 }

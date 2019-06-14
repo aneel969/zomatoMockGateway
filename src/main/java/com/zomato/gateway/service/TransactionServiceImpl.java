@@ -26,17 +26,25 @@ import com.zomato.gateway.paymentrequest.PaymentRequest;
 @Transactional
 public class TransactionServiceImpl implements TransactionService {
 
-	@Autowired
-	private PaymentDetailDAO paymentDetailsDao;
 	
-	@Autowired
-	private TransactionDAO transactionDAO;
+	
+	private final PaymentDetailDAO paymentDetailsDao;
+	
+	
+	private final TransactionDAO transactionDAO;
 
-	@Autowired
-	private RefundDAO refundDAO;
+	private final RefundDAO refundDAO;
+	
+	private final CardDetailsDAO cardDetailsDAO;
 	
 	@Autowired
-	private CardDetailsDAO cardDetailsDAO;
+	public TransactionServiceImpl(PaymentDetailDAO paymentDetailsDao,TransactionDAO transactionDAO,CardDetailsDAO cardDetailsDAO,RefundDAO refundDAO) {
+		
+		this.paymentDetailsDao=paymentDetailsDao;
+		this.refundDAO=refundDAO;
+		this.cardDetailsDAO=cardDetailsDAO;
+		this.transactionDAO=transactionDAO;
+	}
 	
 	public TransactionMaster savePayment(PaymentRequest paymentRequest) {
 		int modeId = Integer.parseInt(paymentRequest.getMode());
@@ -141,7 +149,7 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 
-	private HashMap<String, String> isValidRefund(String transactionId,float refundAmount,float transactionAmount) {
+	public HashMap<String, String> isValidRefund(String transactionId,float refundAmount,float transactionAmount) {
 		
 		Double refundedAmount=refundDAO.getRefundedAmount(transactionId);
 		HashMap<String,String> response= new HashMap<String, String>();
@@ -172,7 +180,7 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 
-	private HashMap<String, String> isValidTransaction(TransactionMaster transaction) {
+	public HashMap<String, String> isValidTransaction(TransactionMaster transaction) {
 		
 		HashMap<String,String> response= new HashMap<String, String>();
 		response.put("errorCode","0");

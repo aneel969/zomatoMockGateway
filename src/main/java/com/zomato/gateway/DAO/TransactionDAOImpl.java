@@ -17,8 +17,13 @@ import org.hibernate.query.Query;
 @Repository
 public class TransactionDAOImpl implements TransactionDAO {
 
+	
+	private final SessionFactory sessionFactory;
+	
 	@Autowired
-	SessionFactory sessionFactory;
+	public TransactionDAOImpl(SessionFactory sessionFactory) {
+		this.sessionFactory=sessionFactory;
+	}
 	public void save(TransactionMaster transaction) {
 		
 		Session currentSession= sessionFactory.getCurrentSession();
