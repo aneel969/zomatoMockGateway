@@ -18,7 +18,7 @@ import com.zomato.gateway.service.MerchantServiceImpl;
 @Controller
 public class PaymentRequestValidator {
 
-	private enum STATUS { terminated, success, processing,failed };    
+	private enum STATUS { pending, success, processing,failed };    
 
 	
 	@Autowired 
@@ -54,8 +54,6 @@ public class PaymentRequestValidator {
 				response=validateRedirectUrl(request.getRedirectUrl());
 			} 
 		}
-		
-		
 		return response;
 	}
 	

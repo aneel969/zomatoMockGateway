@@ -149,7 +149,7 @@ public class PaymentControllerTest {
 	}
 	
 	@Test
-	public void transactionVAlidityForRefundTest() {
+	public void alreadyRefundedTransactionRefundTest() {
 		
 		TransactionMaster transaction = new TransactionMaster();
 		transaction.setAmount(10);
@@ -163,6 +163,24 @@ public class PaymentControllerTest {
 		
 		assertEquals(expectedResponse.get("errorMessage"), response.get("errorMessage"));
 	}
+	
+	@Test
+	public void validTransactionRefundTest() {
+		
+		TransactionMaster transaction = new TransactionMaster();
+		transaction.setAmount(10);
+		transaction.setId("5");
+		transaction.setStatus("partially_refunded");
+		HashMap<String, String> response = new HashMap<String, String>();
+
+		response = transactionService.isValidTransaction(transaction);
+		HashMap<String, String> expectedResponse = new HashMap<String, String>();
+		expectedResponse.put("errorCode", "0");
+		
+		assertEquals(expectedResponse.get("errorCode"), response.get("errorCode"));
+		
+	}
+	
 	
 	@Test
 	public void inValidRefundAmountTest() {
@@ -193,7 +211,6 @@ public class PaymentControllerTest {
 		response=transactionService.isValidRefund("5",10,100);
 		assertEquals(expectedResponse.get("errorCode"), response.get("errorCode"));
 	}
-	
 	
 	
 }

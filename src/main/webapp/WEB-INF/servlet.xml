@@ -81,7 +81,17 @@
 		<property name="maxUploadSize" value="2000000" />
 		<!-- other properties... -->
 	</bean>
-
+	
+	<!-- <bean id="myProperties"
+	      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	  <property name="locations">
+	    <list>
+	      <value>classpath*:bank.properties</value>
+	    </list>
+	  </property>
+	</bean> -->
+	
+	<context:property-placeholder location="classpath:bank.properties"/>
 </beans>
 
 

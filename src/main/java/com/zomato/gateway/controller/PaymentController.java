@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,8 @@ public class PaymentController {
 	@Autowired
 	private PaymentRequestValidator validator;
 	
+	@Value("${mock.bank.url}")
+	String mockBankUrl;
 	@RequestMapping(value="/payment",method=RequestMethod.POST)
 	private ResponseEntity processPayment(@RequestBody PaymentRequest paymentRequest) throws JsonParseException, JsonMappingException, IOException{
 		
@@ -65,13 +68,8 @@ public class PaymentController {
 				response.put("errorCode","0");
 				response.put("transactionId",transactionId);
 				response.put("status",transaction.getStatus());
-		        InetAddress ip;
-		        String hostname;
-				ip = InetAddress.getLocalHost();
-	            hostname = ip.getHostName();
-	            System.out.println(hostname);
-				response.put("bankUrl","http://localhost:8080/mockgateway/mockBank.html?transactionId="+transactionId);
-	            responseEntity = new ResponseEntity(response, HttpStatus.ACCEPTED);
+				response.put("bankUrl",mockBankUrl+"?transactionId="+transactionId);
+	            responseEntity = new ResponseEntity(response, HttpStatus.OK);
 				
 			}else {
 				responseEntity= new ResponseEntity(response, HttpStatus.BAD_REQUEST);
@@ -86,8 +84,7 @@ public class PaymentController {
 		return responseEntity;
 	}
 
-	//make it post
-	@RequestMapping(value="/transactionStatus")
+	@RequestMapping(value="/transactionStatus",method=RequestMethod.POST)
 	private ResponseEntity getTransactionStatus(@RequestParam String transactionId) {
 		
 		HashMap<String,String> response;
@@ -97,12 +94,11 @@ public class PaymentController {
 			response=transactionService.transactionStatus(transactionId);
 			String errorCode=response.get("errorCode");
 			if(errorCode.equals("0"))
-		        responseEntity = new ResponseEntity(response, HttpStatus.ACCEPTED);
+		        responseEntity = new ResponseEntity(response, HttpStatus.OK);
 			else
 		        responseEntity = new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 			
 		} catch (Exception e) {
-			//log the exception
 			response=new HashMap<String, String>();
 			response.put("errorCode","4");
 			response.put("errorMessage","Server Error");
@@ -112,8 +108,7 @@ public class PaymentController {
 		return responseEntity;
 	}
 	
-	//make it post
-	@RequestMapping(value="refund")
+	@RequestMapping(value="refund",method=RequestMethod.POST)
 	private ResponseEntity refundTransaction(@RequestParam String transactionId,@RequestParam float amount) {
 		
 		HashMap<String,String> response ;
@@ -131,7 +126,7 @@ public class PaymentController {
 				response=transactionService.refund(transactionId,amount);
 				String errorCode=response.get("errorCode");
 				if(errorCode.equals("0"))
-			        responseEntity = new ResponseEntity(response, HttpStatus.ACCEPTED);
+			        responseEntity = new ResponseEntity(response, HttpStatus.OK);
 				else
 			        responseEntity = new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 				
@@ -149,9 +144,7 @@ public class PaymentController {
 	}
 	
 	
-
-	//make it post
-	@RequestMapping(value="updateTransaction")
+	@RequestMapping(value="updateTransaction",method=RequestMethod.POST)
 	@SuppressWarnings("rawtypes") 
 	private ResponseEntity updateTransactionStatus(@RequestParam String transactionId,@RequestParam String status){
 		
@@ -166,7 +159,7 @@ public class PaymentController {
 				response=transactionService.updateTransactionStatus(transactionId, status);
 				errorCode=response.get("errorCode");
 				if(errorCode.equals("0"))
-			        responseEntity = new ResponseEntity(response, HttpStatus.ACCEPTED);
+			        responseEntity = new ResponseEntity(response, HttpStatus.OK);
 				else
 			        responseEntity = new ResponseEntity(response, HttpStatus.BAD_REQUEST);
 			}else {
