@@ -24,7 +24,6 @@ import com.zomato.gateway.paymentrequest.PaymentRequest;
 import com.zomato.gateway.service.MerchantService;
 import com.zomato.gateway.service.TransactionService;
 import com.zomato.gateway.validators.PaymentRequestValidator;
-//write trigger
 @RestController
 @RequestMapping("/gateway")
 public class PaymentController {

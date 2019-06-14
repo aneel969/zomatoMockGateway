@@ -60,8 +60,6 @@ public class PaymentControllerTest {
 	public void validateStatusTest() {
 
 		PaymentRequestValidator validator = mock(PaymentRequestValidator.class);
-
-		// PaymentRequestValidator validator = new PaymentRequestValidator();
 		String redirectUrl = "";
 		when(validator.validateRedirectUrl(redirectUrl)).thenCallRealMethod();
 		HashMap<String, String> response = new HashMap<String, String>();
@@ -126,7 +124,6 @@ public class PaymentControllerTest {
 
 	@Before
 	public void setup() throws Exception {
-		// MockitoAnnotations.initMocks(this);
 		transactionService = new TransactionServiceImpl(paymentDetailsDao, transactionDAO, cardDetailsDAO, refundDAO);
 
 	}

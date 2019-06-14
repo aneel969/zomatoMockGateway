@@ -13,22 +13,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name="transaction_master")
 public class TransactionMaster {
-	//todo implement cascading 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//todo  it shouldnt be auto increment
 	private String id;
 	
 	@ManyToOne
 	@JoinColumn(name = "merchant_id")
 	private MerchantMaster merchant;
 	
-	//check float?
 	@Column(name="amount")
 	private float amount;
 	
 	@Column(name="status")
-	//enum handling
 	private String status;
 	
 	@ManyToOne
