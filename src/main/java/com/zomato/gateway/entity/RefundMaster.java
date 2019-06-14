@@ -30,7 +30,17 @@ public class RefundMaster {
 	@JoinColumn(name="transaction_id")
 	private TransactionMaster transaction;
 
+	@Column(name="refund_tstamp")
+	private String refundTstamp;
 	
+	
+	public String getRefundTstamp() {
+		return refundTstamp;
+	}
+
+	public void setRefundTstamp(String refundTstamp) {
+		this.refundTstamp = refundTstamp;
+	}
 
 	public String getId() {
 		return id;
