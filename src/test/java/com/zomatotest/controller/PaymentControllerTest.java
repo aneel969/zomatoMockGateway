@@ -76,7 +76,7 @@ public class PaymentControllerTest {
 		PaymentRequestValidator validator = mock(PaymentRequestValidator.class);
 
 		Card card = new Card();
-		card.setCardNumber("1234");
+		card.setCardNumber("1234567812345678");
 		card.setCvv("123");
 		card.setExpiry("12/01/20");
 		card.setType("debit");
@@ -94,7 +94,7 @@ public class PaymentControllerTest {
 	public void validateRequest() {
 
 		Card card2 = new Card();
-		card2.setCardNumber("1234");
+		card2.setCardNumber("1234567812345678");
 		card2.setCvv("123");
 		card2.setExpiry("12-01-20");
 		card2.setType("debit");

@@ -107,7 +107,6 @@ public class TransactionServiceImpl implements TransactionService {
 			TransactionMaster transaction = transactionDAO.getTransaction(transactionId);
 			HashMap<String,String> response= new HashMap<String, String>();
 			
-			//function name smell
 			response=isValidTransaction(transaction);
 			String errorCode=response.get("errorCode");
 			if(!errorCode.equals("0"))
@@ -115,7 +114,6 @@ public class TransactionServiceImpl implements TransactionService {
 			String newStatus=transaction.getStatus();
 			float transactionAmount=transaction.getAmount();
 			
-			//function name smell
 			response=isValidRefund(transactionId,amount,transactionAmount);
 			errorCode=response.get("errorCode");
 			if(!errorCode.equals("0"))
@@ -204,7 +202,6 @@ public class TransactionServiceImpl implements TransactionService {
 
 
 	public HashMap<String, String> updateTransactionStatus(String transactionId, String status) {
-		
 		
 		HashMap<String, String> response= new HashMap<String, String>();
 		TransactionMaster transaction = transactionDAO.getTransaction(transactionId);

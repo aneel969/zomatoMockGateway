@@ -123,7 +123,7 @@ public class PaymentRequestValidator {
 			return response;
 		
 		}
-		if(cardLength!=4 || cvvLength!=3) {
+		if(cardLength!=16 || cvvLength!=3) {
 			
 			response.put("errorCode", "2");
 			response.put("errorMessage", "invalid format");	

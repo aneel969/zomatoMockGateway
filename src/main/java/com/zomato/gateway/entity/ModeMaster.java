@@ -33,9 +33,5 @@ public class ModeMaster {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	
-	
-	
+	}	
 }
