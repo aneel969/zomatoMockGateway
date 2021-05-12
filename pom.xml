@@ -11,7 +11,7 @@
 		<hibernate.version>5.4.1.Final</hibernate.version>
 		<mysql.connector.version>5.1.47</mysql.connector.version>
 		<c3po.version>0.9.5.2</c3po.version>
-		<springsecurity.version>5.1.4.RELEASE</springsecurity.version>
+		<springsecurity.version>5.2.10.RELEASE</springsecurity.version>
 
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
@@ -106,7 +106,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>5.1.5.RELEASE</version>
+			<version>5.2.10.RELEASE</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
